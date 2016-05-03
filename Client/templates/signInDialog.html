@@ -1,0 +1,45 @@
+<md-dialog aria-label="Sign In" ng-cloak="" md-theme="{{ dynamicTheme }}"   >
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>Sign In</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="cancel()">
+                <i class="material-icons">close</i>
+                <!--<md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>-->
+            </md-button>
+        </div>
+    </md-toolbar>
+    <form name="signupForm" ng-submit="callsignin()">
+        <md-dialog-content>
+             <div class="md-dialog-content" >
+                <md-input-container class="md-icon-float md-block">
+                    <!-- Use floating label instead of placeholder -->
+                    <label>username</label>
+                    <!--<i class="material-icons">person</i>-->
+                    <md-icon class="md-primary">person</md-icon>
+                    <input ng-model="user.username" name="username" type="text" ng-required="true" minlength="6" maxlength="20">
+                    <div ng-messages="signupForm.username.$error">
+                        <div ng-message="required">username is required to login.</div>
+                        <div ng-message="minlength">The username should be at least 6 characters.</div>
+                    </div>
+                </md-input-container>
+                <md-input-container md-no-float class="md-block">
+                    <label>Password</label>
+                    <md-icon >lock</md-icon>
+                    <input ng-model="user.password" type="password" name="password" ng-required="true" minlength="6" maxlength="20">
+                    <div ng-messages="signupForm.password.$error">
+                        <div ng-message="required">You must give a password.</div>
+                        <div ng-message="minlength">Password should be at least 6 characters long.</div>
+                    </div>
+                </md-input-container>
+                <div ng-if="loginFailed"><label>Login Failed</label></div>
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions layout="row">
+            <span flex></span>
+            <md-button type="submit" class="md-raised md-primary">
+                Sign-in
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

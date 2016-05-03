@@ -1,0 +1,104 @@
+<md-toolbar md-scroll-shrink ng-if="true" class="md-blue md-hue-1">
+<!--<md-subheader class="md-primary">-->
+    <div class="md-toolbar-tools">
+        <h3 class="md-white"><span>Category</span></h3><i class="material-icons">keyboard_arrow_right</i>
+        <h3><span>Description</span></h3><i class="material-icons">keyboard_arrow_right</i>
+        <h3><span>Finish</span></h3>
+    </div>
+<!--</md-subheader>-->
+</md-toolbar>
+
+<div class="md-padding" ng-if="breadcrumb === 'Category'">
+    <form name="newOfferForm" ng-submit="changeBreadcrumb('Description')">
+        <h1 class="md-title">What do want to sell? {{newOffer.category}}</h1>
+        <md-input-container class="md-block">
+            <label>Title</label>
+            <input required type="text" name="title" ng-model="newOffer.title" ng-pattern="/[A-Za-z0-9]*/" />
+            <div ng-messages="newOfferForm.title.$error" multiple md-auto-hide="false">
+                <div ng-message="required">
+                    You've got to give some name to the item you are selling.
+                </div>
+            </div>
+        </md-input-container>
+        <md-radio-group ng-model="newOffer.category">
+            <div layout="row" layout-wrap flex>
+                <div flex="33" ng-repeat="category in newOfferData.categories">
+                    <md-radio-button value="{{category}}" class="md-primary">{{category}}</md-radio-button>
+                </div>
+            </div>
+        </md-radio-group>
+        <md-button class="md-raised md-primary" type="submit" >Next <i class="material-icons">arrow_forward</i></md-button>
+    </form>
+</div>
+
+<div class="md-padding" ng-if="breadcrumb === 'Description'">
+    <form name="descriptionForm" ng-submit="changeBreadcrumb('Finish')">
+        <div layout="row" layout-wrap flex>
+            <div flex="50">
+                <h1 class="md-title">Description</h1>
+                <md-input-container class="md-block">
+                    <label>Description</label>
+                    <textarea ng-model="newOffer.description" md-maxlength="200" rows="8" md-select-on-focus></textarea>
+                </md-input-container>
+            </div>
+            <div flex="50" md-padding>
+                <h1 class="md-title">Set a price for {{newOffer.title}}</h1>
+                <md-input-container class="md-block">
+                    <label>Price (USD)</label>
+                    <input required type="number" step="any" name="price" ng-model="newOffer.price" min="0" ng-pattern="/[0-9]*/" />                
+                    <div ng-messages="descriptionForm.price.$error" multiple md-auto-hide="true">
+                        <div ng-message="required">
+                            You've got to charge something! You can't just <b>give away</b> {{newOffer.title}}
+                        </div>
+                        <div ng-message="pattern">
+                            You should charge more than USD 0.
+                        </div>
+                    </div>
+                </md-input-container>
+            </div>
+            <div flex="100">
+            <h1 class="md-title">You can add multiple photos of {{newOffer.title}}</h1>
+            <lf-ng-md-file-input lf-api="api02" lf-files="$root.files" lf-option="optoin" lf-placeholder="Add Images" lf-browse-label="Browse" lf-remove-label="Delete" multiple preview ng-disabled="false"></lf-ng-md-file-input>
+            
+        </div>
+        </div>
+        <md-button class="md-raised md-primary" ng-click="changeBreadcrumb('Category')"><i class="material-icons">arrow_back</i> Previous</md-button>
+        <md-button class="md-raised md-primary" type="submit">Next <i class="material-icons">arrow_forward</i></md-button>
+    </form>
+</div>
+
+<div class="md-padding" ng-if="breadcrumb === 'Finish'">
+    <md-content>
+        <md-list flex>
+            <md-list-item class="md-2-line">
+                 <div class="md-list-item-text">
+                    <h2>Title</h2>
+                    <h4>{{newOffer.title}}</h4>
+                 </div>
+            </md-list-item>
+            <md-divider ></md-divider>
+            <md-list-item class="md-2-line">
+                 <div class="md-list-item-text">
+                    <h3>Description</h3>
+                    <h4>{{newOffer.description}}</h4>
+                </div>
+            </md-list-item>
+            <md-divider ></md-divider>
+            <md-list-item class="md-2-line">
+                 <div class="md-list-item-text">
+                    <h4>Price</h4>
+                    <h4>{{newOffer.price}}</h4>
+                </div>
+            </md-list-item>
+            <md-divider ></md-divider>
+            <md-list-item class="md-2-line">
+                <div class="md-list-item-text">
+                    <h4>Photos</h4>
+                    <h4>Photos to be shown</h4>
+                </div>
+            </md-list-item>
+        </md-list>
+    </md-content>
+    <md-button class="md-raised md-primary" ng-click="changeBreadcrumb('Description')"><i class="material-icons">arrow_back</i> Previous</md-button>
+    <md-button class="md-raised md-primary" ng-click="AddOffer()">Add Offer <i class="material-icons">arrow_forward</i></md-button>
+</div>

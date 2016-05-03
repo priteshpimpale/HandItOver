@@ -1,0 +1,186 @@
+<md-content>
+    <md-tabs md-dynamic-height md-border-bottom>
+        <md-tab label="Offers">
+            <md-tabs md-dynamic-height md-border-bottom>
+                <md-tab label="{{category}}" ng-repeat="category in categories">
+                    <md-content class="md-padding" layout-xs="column" layout="row" layout-wrap>
+                        <div flex-xs flex-sm="50" flex-md="33" flex-gt-md="20" ng-repeat="offer in offers" ng-if="offer.category === category"> 
+                            <md-card>
+                                <div ng-show="!offer.makeofferDiv">
+                                    <img ng-src="../{{offer.imagePath}}" class="md-card-image" alt="Washed Out">
+                                    <md-card-title>
+                                        <md-card-title-text>
+                                            <span class="md-headline">{{ offer.title }}</span>
+                                            <span class="">$ {{ offer.price }}</span>
+                                        </md-card-title-text>
+                                        <md-card-title-media ng-if="offer.isSold">
+                                            <md-icon class="md-primary" style="width: 50px; height: 50px;" md-svg-src="Client/icons/sold-sign.svg"></md-icon>
+                                        </md-card-title-media>
+                                    </md-card-title>
+                                </div>
+                                <div ng-show="offer.makeofferDiv">
+                                    <md-card-title>
+                                        <md-card-title-text>
+                                            <span class="md-headline">{{ offer.title }}</span>
+                                            <span class="md-subhead">$ {{offer.price}}</span>
+                                            <span class="md-subhead">{{offer.description}}</span>
+                                        </md-card-title-text>
+                                        <md-card-title-media>
+                                            <div class="md-media-lg card-media">
+                                                <img ng-src="../{{offer.imagePath}}" class="md-card-image" alt="Washed Out" />
+                                            </div>
+                                        </md-card-title-media>
+                                    </md-card-title>
+                                    
+                                    <md-card-content ng-if="!offer.isSold">
+                                        <!--<p>Your Offer: $<input type="number" ng-model="offer.myOffer" /></p>-->
+                                        
+                                        <md-input-container class="md-icon-float md-icon-right md-block">
+                                            <label>Your Offer</label>
+                                            <md-icon class="md-primary">monetization_on</md-icon>
+                                            <input ng-model="offer.myOffer" type="number" step="0.01">
+                                        </md-input-container>
+                                        
+                                    </md-card-content>
+                                </div>
+                                <md-card-actions layout="row" layout-align="start center">
+                                    <md-card-icon-actions>
+                                        <md-button class="md-icon-button" aria-label="Favorite" ng-click="markFavorite(offer)">
+                                            <!--<md-icon md-svg-icon="img/icons/favorite.svg"></md-icon>-->
+                                            <i class="material-icons" ng-style="{color : offer.isFavorite }" >favorite</i>
+                                        </md-button>
+                                        <md-button class="md-icon-button" aria-label="Close" ng-show="offer.makeofferDiv" ng-click="offer.makeofferDiv=false">
+                                            <!--<md-icon md-svg-icon="img/icons/share-arrow.svg"></md-icon>-->
+                                            <i class="material-icons" >close</i>
+                                        </md-button>
+                                    </md-card-icon-actions>
+                                    <md-button class="md-raised md-primary" ng-show="!offer.makeofferDiv" ng-click="details(offer)">Details</md-button>
+                                    <md-button class="md-raised md-primary" ng-show="offer.makeofferDiv" ng-disabled="offer.isSold" ng-click="makeOffer(offer)">make offer</md-button>
+                                    <!--<md-button>Action 2</md-button>-->
+                                </md-card-actions>
+                                
+                            </md-card>
+                        </div>
+                    </md-content>
+                </md-tab>
+            </md-tabs>
+        </md-tab>
+        <md-tab label="Your Favorites" ng-if="user.username !== undefined">
+            <md-content class="md-padding" layout-xs="column" layout="row" layout-wrap>
+                <div flex-xs flex-sm="50" flex-md="33" flex-gt-md="20" ng-repeat="offer in offers" ng-if="offer.isFavorite === 'red'"> 
+                    <md-card>
+                        <div ng-show="!offer.makeofferDiv">
+                            <img ng-src="../{{offer.imagePath}}" class="md-card-image" alt="Washed Out">
+                            <md-card-title>
+                                <md-card-title-text>
+                                    <span class="md-headline">{{ offer.title }}</span>
+                                    <span class="">$ {{ offer.price }}</span>
+                                </md-card-title-text>
+                                <md-card-title-media ng-if="offer.isSold">
+                                    <md-icon class="md-primary" style="width: 50px; height: 50px;" md-svg-src="Client/icons/sold-sign.svg"></md-icon>
+                                </md-card-title-media>
+                            </md-card-title>
+                        </div>
+                        <div ng-show="offer.makeofferDiv">
+                            <md-card-title>
+                                <md-card-title-text>
+                                    <span class="md-headline">{{ offer.title }}</span>
+                                    <span class="md-subhead">$ {{offer.price}}</span>
+                                    <span class="md-subhead">{{offer.description}}</span>
+                                </md-card-title-text>
+                                <md-card-title-media>
+                                    <div class="md-media-lg card-media">
+                                        <img ng-src="../{{offer.imagePath}}" class="md-card-image" alt="Washed Out" />
+                                    </div>
+                                </md-card-title-media>
+                            </md-card-title>
+                            
+                            <md-card-content ng-if="!offer.isSold">
+                                <!--<p>Your Offer: $<input type="number" ng-model="offer.myOffer" /></p>-->
+                                
+                                <md-input-container class="md-icon-float md-icon-right md-block">
+                                    <label>Your Offer</label>
+                                    <md-icon class="md-primary">monetization_on</md-icon>
+                                    <input ng-model="offer.myOffer" type="number" step="0.01">
+                                </md-input-container>
+                                
+                            </md-card-content>
+                        </div>
+                        <md-card-actions layout="row" layout-align="start center">
+                            <md-card-icon-actions>
+                                <md-button class="md-icon-button" aria-label="Favorite" ng-click="markFavorite(offer)">
+                                    <!--<md-icon md-svg-icon="img/icons/favorite.svg"></md-icon>-->
+                                    <i class="material-icons" ng-style="{color : offer.isFavorite }" >favorite</i>
+                                </md-button>
+                                <md-button class="md-icon-button" aria-label="Close" ng-show="offer.makeofferDiv" ng-click="offer.makeofferDiv=false">
+                                    <!--<md-icon md-svg-icon="img/icons/share-arrow.svg"></md-icon>-->
+                                    <i class="material-icons" >close</i>
+                                </md-button>
+                            </md-card-icon-actions>
+                            <md-button class="md-raised md-primary" ng-show="!offer.makeofferDiv" ng-click="details(offer)">Details</md-button>
+                            <md-button class="md-raised md-primary" ng-show="offer.makeofferDiv" ng-disabled="offer.isSold" ng-click="makeOffer(offer)">make offer</md-button>
+                            <!--<md-button>Action 2</md-button>-->
+                        </md-card-actions>
+                        
+                    </md-card>
+                </div>
+            </md-content>
+        </md-tab>
+        <md-tab label="Your Offers" ng-if="user.username !== undefined">
+            <md-content class="md-padding" layout-xs="column" layout="row" layout-wrap>
+                <div flex-xs flex-sm="50" flex-md="33" flex-gt-md="20" ng-repeat="offer in offers" ng-if="offer.user === user.username"> 
+                    <md-card>
+                        <div ng-show="!offer.makeofferDiv">
+                            <img ng-src="../{{offer.imagePath}}" class="md-card-image" alt="Washed Out">
+                            <md-card-title>
+                                <md-card-title-text>
+                                    <span class="md-headline">{{ offer.title }}</span>
+                                    <span class="">$ {{ offer.price }}</span>
+                                </md-card-title-text>
+                                <md-card-title-media ng-if="offer.isSold">
+                                    <md-icon class="md-primary" style="width: 50px; height: 50px;" md-svg-src="Client/icons/sold-sign.svg"></md-icon>
+                                </md-card-title-media>
+                            </md-card-title>
+                        </div>
+                        <div ng-show="offer.makeofferDiv">
+                            <md-card-title>
+                                <md-card-title-text>
+                                    <span class="md-headline">{{ offer.title }}</span>
+                                    <span class="md-subhead">$ {{offer.price}}</span>
+                                    
+                                </md-card-title-text>
+                                <md-card-title-media>
+                                    <div class="md-media-lg card-media">
+                                        <img ng-src="../{{offer.imagePath}}" class="md-card-image" alt="Washed Out" />
+                                    </div>
+                                </md-card-title-media>
+                            </md-card-title>
+                            <md-card-content ng-if="!offer.isSold">
+                                <span class="md-subhead">{{offer.description}}</span>
+                                <ul>
+                                    <li ng-repeat="of in offer.offers| orderBy:'date'">{{of.user}} has offered {{of.offeredPrice}}</li>
+                                </ul>
+                            </md-card-content>
+                        </div>
+                        <md-card-actions layout="row" layout-align="start center">
+                            <md-card-icon-actions>
+                                <md-button class="md-icon-button" aria-label="Favorite" ng-click="markFavorite(offer)">
+                                    <!--<md-icon md-svg-icon="img/icons/favorite.svg"></md-icon>-->
+                                    <i class="material-icons" ng-style="{color : offer.isFavorite }" >favorite</i>
+                                </md-button>
+                                <md-button class="md-icon-button" aria-label="Close" ng-show="offer.makeofferDiv" ng-click="offer.makeofferDiv=false">
+                                    <!--<md-icon md-svg-icon="img/icons/share-arrow.svg"></md-icon>-->
+                                    <i class="material-icons" >close</i>
+                                </md-button>
+                            </md-card-icon-actions>
+                            <md-button class="md-raised md-primary" ng-show="!offer.makeofferDiv" ng-click="details(offer)">Details</md-button>
+                            <md-button class="md-raised md-primary" ng-show="offer.makeofferDiv" ng-disabled="offer.isSold" ng-click="markSold(offer)">Mark Sold</md-button>
+                            <!--<md-button>Action 2</md-button>-->
+                        </md-card-actions>
+                        
+                    </md-card>
+                </div>
+            </md-content>
+        </md-tab>
+    </md-tabs>
+</md-content>

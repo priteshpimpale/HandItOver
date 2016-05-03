@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+
+<head>
+    <link rel="stylesheet" href="node_modules/angular-material/angular-material.css"></link>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="node_modules/lf-ng-md-file-input/dist/lf-ng-md-file-input.css"></link>
+    <link rel="stylesheet" href="Client/index.css"></link>
+    
+</head>
+<body ng-app="HandItOver" >
+    <div ng-controller="mainController" ng-cloak="" class="gridListdemoBasicUsage" md-theme="{{ dynamicTheme }}" md-theme-watch>
+        <md-toolbar md-scroll-shrink layout="row">
+            <div class="md-toolbar-tools">HandItOver</div>
+             <md-select ng-model="dynamicTheme" md-selected-text="getSelectedText()" aria-label="themeSelect">   
+                <md-optgroup label="themes">
+                    <md-option ng-value="theme" ng-repeat="theme in themes">theme {{theme}}</md-option>
+                </md-optgroup>
+            </md-select>
+            <md-button ng-if="user.name !== ''" ng-click="loadNewOffer()"><i class="material-icons">add</i></md-button>
+            <md-button ng-if="user.name === ''" ng-click="showSignInDialog($event)">Sign in</md-button>
+            <md-button ng-if="user.name === ''" ng-click="showSignUpDialog($event)">Sign up</md-button>
+            <md-menu ng-if="user.name !== ''" md-position-mode="target-right target">
+                <md-button aria-label="Open user menu" ng-click="openUserMenu($mdOpenMenu, $event)">
+                    <md-icon md-menu-origin >person</md-icon>
+                    {{user.name}}
+                </md-button>
+                <md-menu-content width="4">
+                    <md-menu-item>
+                        <md-button>
+                            <md-icon md-menu-origin >person</md-icon>
+                            {{user.name}}
+                        </md-button>
+                    </md-menu-item>
+                    <md-menu-divider></md-menu-divider>
+                    <md-menu-item>
+                        <md-button ng-click="logout($event)">
+                            <!--<md-icon md-svg-icon="call:dialpad" md-menu-align-target></md-icon>-->
+                            Logout
+                        </md-button>
+                    </md-menu-item>
+                    
+                </md-menu-content>
+            </md-menu>
+           
+        </md-toolbar>
+        <div ng-view class="angularview"></div>
+        <!--<lf-ng-md-file-input lf-files='files1' lf-api="api02" multiple> </lf-ng-md-file-input>-->
+    </div>
+    <script type="text/javascript" src="node_modules/angular/angular.js"></script>
+    <script type="text/javascript" src="node_modules/angular-route/angular-route.js"></script>
+    <script type="text/javascript" src="node_modules/angular-material/angular-material.js"></script>
+    <script type="text/javascript" src="node_modules/angular-animate/angular-animate.js"></script>
+    <script type="text/javascript" src="node_modules/angular-aria/angular-aria.js"></script>
+    <script type="text/javascript" src="node_modules/angular-messages/angular-messages.js"></script>
+    <script type="text/javascript" src="node_modules/lf-ng-md-file-input/dist/lf-ng-md-file-input.js"></script>
+    <script type="text/javascript" src="node_modules/socket.io/node_modules/socket.io-client/socket.io.js"></script>
+    <!--<script type="text/javascript" src="../node_modules/socket.io/lib/socket.js"></script>-->
+    <script type="text/javascript" src="Client/index.js"></script>
+</body>

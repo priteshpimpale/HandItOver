@@ -1,0 +1,96 @@
+<md-dialog aria-label="Sign Up" ng-cloak="">
+    <md-toolbar>
+        <div class="md-toolbar-tools md-primary">
+            <h2>Sign Up</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="cancel()">
+                <i class="material-icons">close</i>
+                <!--<md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>-->
+            </md-button>
+        </div>
+    </md-toolbar>
+    <form name="signupForm1" ng-if="signup.status == 'info'" ng-submit= "next('name')">
+        <md-dialog-content>
+            <div class="md-dialog-content" >
+                <md-input-container class="md-icon-float md-block">
+                    <!-- Use floating label instead of placeholder -->
+                    <label>Name</label>
+                    <!--<i class="material-icons">person</i>-->
+                    <md-icon class="md-primary">person</md-icon>
+                    <input ng-model="user.name" type="text" name="name" required>
+                    <div ng-messages="signupForm1.name.$error">
+                        <div ng-message="required">You should give yourself a name.</div>
+                    </div>
+                </md-input-container>
+                <md-input-container md-no-float class="md-block">
+                    <label>Phone Number</label>
+                    <md-icon>phone</md-icon>
+                    <input ng-model="user.phone" type="text">
+                </md-input-container>
+                <md-input-container class="md-block">
+                    <!-- Use floating placeholder instead of label -->
+                    <md-icon >email</md-icon>
+                    <input ng-model="user.email" type="email" name="email" placeholder="Email (required)" ng-required="true">
+                    <div ng-messages="signupForm1.email.$error">
+                        <div ng-message="required">we won't be able to contact you without email.</div>
+                    </div>
+                </md-input-container>
+                <md-input-container md-no-float class="md-block">
+                    <input ng-model="user.address" type="text" placeholder="Address">
+                    <md-icon style="display:inline-block;">place</md-icon>
+                </md-input-container>
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions layout="row">
+            <span flex></span>
+            <md-button type="submit">
+                Next
+            </md-button>
+         </md-dialog-actions>
+    </form>
+    <form name="signupForm2" ng-submit="callsignup()" ng-if="signup.status === 'name'">
+        <md-dialog-content>
+             <div class="md-dialog-content" >
+                <md-input-container class="md-icon-float md-block">
+                    <!-- Use floating label instead of placeholder -->
+                    <label>username</label>
+                    <!--<i class="material-icons">person</i>-->
+                    <md-icon class="md-primary">person</md-icon>
+                    <input ng-model="user.username" name="username" type="text" ng-required="true" minlength="6" maxlength="20">
+                    <div ng-messages="signupForm.username.$error">
+                        <div ng-message="required">username is required to login.</div>
+                        <div ng-message="minlength">The username should be at least 6 characters.</div>
+                    </div>
+                </md-input-container>
+                <md-input-container md-no-float class="md-block">
+                    <label>Password</label>
+                    <md-icon >lock</md-icon>
+                    <input ng-model="user.password" type="password" name="password" ng-required="true" minlength="6" maxlength="20">
+                    <div ng-messages="signupForm.password.$error">
+                        <div ng-message="required">You must set a password.</div>
+                        <div ng-message="minlength">Password should be at least 8 characters.</div>
+                    </div>
+                </md-input-container>
+                <md-input-container md-no-float class="md-block">
+                    <label>Confirm Password</label>
+                    <md-icon >lock</md-icon>
+                    <input ng-model="user.passwordconf" type="password" name="passwordconf" ng-required="true" matchpassword="{{user.password}}"  >
+                    <div ng-messages="signupForm.passwordconf.$error">
+                        <div ng-message="required">You must confirm your password.</div>
+                        <div ng-message="nopasswordmatch">Your password doesn't match</div>
+                        <div ng-message="passwordmatch">Password matched</div>
+                    </div>
+                </md-input-container>
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions layout="row">
+            <md-button ng-click="next('info')" style="margin-right:20px;">
+                Back
+            </md-button>
+            <span flex></span>
+            <md-button type="submit" class="md-raised md-primary" style="margin-right:20px;">
+                Sign-up
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>
